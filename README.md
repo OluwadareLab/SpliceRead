@@ -11,9 +11,10 @@ A deep learning framework for canonical and non-canonical splice site classifica
 * Sahil Thapa
 * Prof. Oluwatosin Oluwadare
 
+___________________
 #### OluwadareLab, University of Colorado, Colorado Springs
+___________________
 
----
 
 ## Overview
 
