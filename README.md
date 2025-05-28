@@ -10,7 +10,8 @@ A deep learning framework for canonical and non-canonical splice site classifica
 * Rohit Menon
 * Sahil Thapa
 * Prof. Oluwatosin Oluwadare
-  **Affiliation:** Bioinformatics Lab, University of Colorado Colorado Springs
+
+#### OluwadareLab, University of Colorado, Colorado Springs
 
 ---
 
