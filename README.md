@@ -50,7 +50,7 @@ cd SpliceRead
 
 Download the Zenodo archive from the link below:
 
-?? [https://doi.org/10.5281/zenodo.15538290](https://doi.org/10.5281/zenodo.15538290)
+[https://doi.org/10.5281/zenodo.15538290](https://doi.org/10.5281/zenodo.15538290)
 
 ### Step 3: Place Files
 
