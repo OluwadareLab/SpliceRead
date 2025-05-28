@@ -26,11 +26,11 @@ SpliceRead/
 +-- models/               # Placeholder folder to be replaced with pretrained models
 +-- output/               # Stores generated synthetic sequences and visualization outputs
 +-- scripts/              # All training, generation, evaluation, and visualization scripts
-¦   +-- training/         # Classifier training logic
-¦   +-- data_augmentation/  # Synthetic data generation logic
-¦   +-- evaluation/       # Performance evaluation scripts
-¦   +-- visualization/    # Plotting utilities
-¦   +-- interpretation/   # SHAP-based interpretation utilities
+Â¦   +-- training/         # Classifier training logic
+Â¦   +-- data_augmentation/  # Synthetic data generation logic
+Â¦   +-- evaluation/       # Performance evaluation scripts
+Â¦   +-- visualization/    # Plotting utilities
+Â¦   +-- interpretation/   # SHAP-based interpretation utilities
 +-- Dockerfile            # Containerized environment for reproducibility
 +-- README.md             # Project documentation
 ```
@@ -214,9 +214,9 @@ python3 scripts/interpretation/run_shap_logo.py \
 
 ## Output Summary
 
-* **Synthetic Sequences** ? `data/train/POS/[ACC|DON]/ADASYN_SYN`
-* **Trained Models** ? `model_files/`
-* **Visualizations** ? `output/`
+* **Synthetic Sequences**  `data/train/POS/[ACC|DON]/ADASYN_SYN`
+* **Trained Models**  `model_files/`
+* **Visualizations**  `output/`
 
   * GC/AT Content Plots
   * SHAP Sequence Logos
