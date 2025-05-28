@@ -2,7 +2,7 @@
 
 A deep learning framework for canonical and non-canonical splice site classification with synthetic data augmentation and SHAP-based interpretability.
 
-[See SpliceRead Wiki for Full Documentation on Instruction and Usage](https://github.com/OluwadareLab/SpliceRead/wiki)
+[See SpliceRead Wiki for Full Documentation on Installation and Usage](https://github.com/OluwadareLab/SpliceRead/wiki)
 
 **Authors:**
 
