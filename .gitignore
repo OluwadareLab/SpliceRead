@@ -1,0 +1,33 @@
+# Byte-compiled / cache files
+__pycache__/
+*.py[cod]
+*.so
+
+# Jupyter Notebooks checkpoints
+.ipynb_checkpoints/
+
+# Log and temporary files
+*.log
+*.tmp
+*.bak
+
+# Dataset and model files
+DATASET/
+MODELS/
+*.h5
+*.npy
+*.npz
+*.csv
+
+# Environment files
+.env
+.venv/
+env/
+venv/
+*.egg-info/
+*.egg
+.Python
+
+# System-specific files
+.DS_Store
+Thumbs.db
