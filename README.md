@@ -1,11 +1,11 @@
 
-# ?? SpliceREAD
+# SpliceREAD
 
 **SpliceREAD** is a deep learning-based framework designed to enhance splice site prediction, with a special focus on identifying **non-canonical splice sites**. The system integrates **residual CNN architectures** and **synthetic data augmentation using ADASYN**, accompanied by robust evaluation and interpretability pipelines using SHAP-based sequence logos.
 
 ---
 
-## ?? Table of Contents
+##  Table of Contents
 
 - [Overview](#overview)
 - [Key Features](#key-features)
@@ -23,7 +23,7 @@
 
 ---
 
-## ?? Overview
+##  Overview
 
 SpliceREAD tackles the problem of **splice site classification** by using a deep CNN with **residual blocks**, specially tailored for recognizing both **canonical and non-canonical** sequences. In particular, it leverages **ADASYN** to synthesize additional examples of rare non-canonical splice sites, improving model generalization.
 
@@ -40,7 +40,7 @@ SpliceREAD tackles the problem of **splice site classification** by using a deep
 
 ---
 
-## ?? Directory Structure
+##  Directory Structure
 
 ```
 SpliceREAD/
@@ -55,7 +55,7 @@ SpliceREAD/
 
 ---
 
-## ?? Installation
+##  Installation
 
 ```bash
 git clone https://github.com/your_username/SpliceREAD.git
@@ -65,13 +65,13 @@ cd SpliceREAD
 pip install -r requirements.txt
 ```
 
-> ?? This project requires **TensorFlow >= 2.x**, **imblearn**, **matplotlib**, **logomaker**, and **SHAP**.
+>  This project requires **TensorFlow >= 2.x**, **imblearn**, **matplotlib**, **logomaker**, and **SHAP**.
 
 ---
 
-## ?? Usage
+##  Usage
 
-### ?? Training
+###  Training
 
 ```bash
 python3 run.py \
@@ -79,7 +79,7 @@ python3 run.py \
   --output model_output/SpliceREAD_model.h5
 ```
 
-### ?? Evaluation
+###  Evaluation
 
 ```bash
 python3 evaluate.py \
@@ -87,7 +87,7 @@ python3 evaluate.py \
   --test_data /path/to/test/data
 ```
 
-### ?? Data Augmentation
+###  Data Augmentation
 
 ```bash
 python3 run_generator.py \
@@ -99,7 +99,7 @@ python3 run_generator.py \
   --n_synthetic_donor 8399
 ```
 
-### ?? Visualization
+###  Visualization
 
 ```bash
 python3 run_visualization.py \
@@ -109,7 +109,7 @@ python3 run_visualization.py \
   --title "Acceptor Sequences"
 ```
 
-### ?? SHAP Interpretation
+###  SHAP Interpretation
 
 ```bash
 python3 run_shap_logo.py \
@@ -122,7 +122,7 @@ python3 run_shap_logo.py \
 
 ---
 
-## ?? Results
+##  Results
 
 Our experiments show that **SpliceREAD**:
 - Improves **non-canonical splice site classification** by over 15% using synthetic data
@@ -133,7 +133,7 @@ Refer to our full paper for benchmarking and ablation studies.
 
 ---
 
-## ????? Authors
+## ? Authors
 
 **SpliceREAD** was developed by:
 
@@ -146,6 +146,6 @@ Refer to our full paper for benchmarking and ablation studies.
 
 ---
 
-## ?? License
+##  License
 
 This project is released under the MIT License.
