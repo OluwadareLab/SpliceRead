@@ -84,9 +84,9 @@ cd /workspace/SpliceRead
 
 ---
 
-## Script Usage
+## Execution Instructions
 
-### 1. `run.py`
+### 1. To train and evaluate.
 
 **Purpose**: Trains and evaluate the SpliceREAD model using 5-fold cross-validation.
 
