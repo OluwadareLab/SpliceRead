@@ -91,21 +91,23 @@ cd /workspace/SpliceRead
 **Purpose**: Trains and evaluate the SpliceREAD model using 5-fold cross-validation.
 
 **Options**:
+## Options
 
-| Flag                         | Description                                                     |                                        |
-| ---------------------------- | --------------------------------------------------------------- | -------------------------------------- |
-| `--three_class_no_synthetic` | Use 3-class system **without** synthetic data                   |                                        |
-| `--three_class`              | Use 3-class system **with** synthetic data (default)            |                                        |
-| `--synthetic_ratio <float>`  | % ratio non-canonical to canonical sequences (default: `100.0`) |                                        |
-| `--use_smote`                | Generate synthetic data with **SMOTE** (instead of ADASYN)      |                                        |
-| `--show_progress`            | Display progress bars during data loading                       |                                        |
-| \`--sequence\_length <400    | 600>\`                                                          | Sequence length in bp (default: `600`) |
-| `--train_dir <path>`         | Directory for training data (auto-detected if omitted)          |                                        |
-| `--test_dir <path>`          | Directory for test data (auto-detected if omitted)              |                                        |
-| `--model_dir <path>`         | Where trained models are saved (auto-generated if omitted)      |                                        |
-| `--output_dir <path>`        | Where evaluation outputs & logs go (auto-generated if omitted)  |                                        |
-| `--model_path <path>`        | Path to a pre-trained model for evaluation                      |                                        |
-| `--folds <int>`              | Number of cross-validation folds (default: `5`)                 |                                        |
+| Flag                              | Description                                                      |
+|-----------------------------------|------------------------------------------------------------------|
+| `--three_class_no_synthetic`      | Use 3-class system **without** synthetic data                    |
+| `--three_class`                   | Use 3-class system **with** synthetic data (default)             |
+| `--synthetic_ratio <float>`       | % ratio of non-canonical to canonical sequences (default: 100.0) |
+| `--use_smote`                     | Generate synthetic data with **SMOTE** (instead of ADASYN)       |
+| `--show_progress`                 | Display progress bars during data loading                        |
+| `--sequence_length <400|600>`     | Sequence length in bp (default: 600)                             |
+| `--train_dir <path>`              | Directory for training data (auto-detected if omitted)           |
+| `--test_dir <path>`               | Directory for test data (auto-detected if omitted)               |
+| `--model_dir <path>`              | Where trained models are saved (auto-generated if omitted)       |
+| `--output_dir <path>`             | Where evaluation outputs & logs go (auto-generated if omitted)   |
+| `--model_path <path>`             | Path to a pre-trained model for evaluation                       |
+| `--folds <int>`                   | Number of cross-validation folds (default: 5)                    |
+
 
 
 **Default Command**:
