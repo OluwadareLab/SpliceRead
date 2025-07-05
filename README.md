@@ -128,7 +128,8 @@ python3 run.py --three-class \
   --show_progress
 ```
 To evaluate a pretrained 600 bp model, download the model_files archive from Zenodo.
-**Arguments**
+
+**Arguments**:
 | Flag                          | Description                                                          |
 |-------------------------------|----------------------------------------------------------------------|
 | `--model_path <path>`         | Path to the trained model file (HDF5, e.g. `.h5`) (required)         |
