@@ -133,9 +133,10 @@ To evaluate a pretrained 600 bp model, download the model_files archive from Zen
 |-------------------------------|----------------------------------------------------------------------|
 | `--model_path <path>`         | Path to the trained model file (HDF5, e.g. `.h5`) (required)         |
 | `--test_data <path>`          | Directory containing test sequences organized by class (required)    |
-| `--out_dir <path>`            | Directory to save evaluation report (default: `./evaluation_results`) |
+| `--out_dir <path>`            | Directory to save evaluation report (default: `./evaluation_results`)|
 | `--sequence_length <600>`     | Sequence length in base pairs (default: `600`)                       |
 | `--show_progress`             | Show progress bars while loading test data    
+
 **Command**
 ```
 ```
