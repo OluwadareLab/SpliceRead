@@ -152,13 +152,13 @@ python3 scripts/evaluation/run_evaluation.py \
 ### 2.`Visualization`
 **Purpose**: Visualizes GC/AT nucleotide content using scatter plots.
 
-To visualize GC/AT nucleotide content, first we have to generate synthetic sequences using ADASYN.
+To visualize GC/AT nucleotide content, first we have to generate synthetic sequences using ADASYN. Synthetic data is already provided in zenodo archive you can use that as well.
 
 #### 2.1. `run_generator.py`
 
 **Purpose**: Generates synthetic non-canonical sequences using ADASYN in one-hot encoding space.
 
-**Arguments**
+**Arguments**:
 
 | Flag                          | Description                                                                 |
 |-------------------------------|-----------------------------------------------------------------------------|
@@ -171,17 +171,6 @@ To visualize GC/AT nucleotide content, first we have to generate synthetic seque
 | `--out_don <path>`            | Output folder to save synthetic donor sequences                             |
 | `--use-smote`                 | Use SMOTE instead of ADASYN for synthetic sequence generation (optional)    |
 
-
-
-**Input**:
-
-* `data/train/POS/ACC/NC`
-* `data/train/POS/DON/NC`
-
-**Output**:
-
-* `data/train/POS/ACC/ADASYN_TEST`
-* `data/train/POS/DON/ADASYN_TEST`
 
 **Example**:
 
@@ -196,37 +185,21 @@ python3 scripts/data_augmentation/run_generator.py \
   --out_don ./to_zenodo/data_400bp/train/POS/DON/ADASYN/ADASYN_100 
 ```
 
----
 
-### 3. `run_feature_space_adasyn.py`
-
-**Purpose**: Uses GC/AT content to generate synthetic sequences with ADASYN.
-
-**Input**:
-
-* Canonical and Non-canonical sequences from:
-
-  * `data/train/POS/ACC/CAN` and `data/train/POS/ACC/NC`
-  * `data/train/POS/DON/CAN` and `data/train/POS/DON/NC`
-
-**Output**:
-
-* Synthetic samples saved to:
-
-  * `data/train/POS/ACC/ADASYN_SYN`
-  * `data/train/POS/DON/ADASYN_SYN`
-
-**Command**:
-
-```bash
-python3 scripts/data_augmentation/run_feature_space_adasyn.py
-```
-
----
-
-### 4. `run_visualization.py`
+#### 2.2. `run_visualization.py`
 
 **Purpose**: Visualizes GC/AT nucleotide content using scatter plots.
+**Arguments**:
+
+| Flag                          | Description                                                           |
+|-------------------------------|-----------------------------------------------------------------------|
+| `--canonical <path>`          | Directory containing canonical sequences                              |
+| `--noncanonical <path>`       | Directory containing non-canonical sequences                          |
+| `--synthetic <path>`          | Directory containing synthetic sequences                              |
+| `--title <str>`               | Title prefix for each plot (used in figure titles and filenames)      |
+| `--output <path>`             | Directory to save generated plots                                     |
+
+
 
 **Input**:
 
