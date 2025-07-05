@@ -214,7 +214,7 @@ python3 scripts/visualization/run_visualization.py \
 
 ---
 
-### 5. `run_shap_logo.py`
+### 3. Interpretation
 
 **Purpose**: Computes SHAP values and generates sequence logo plots to interpret model decisions.
 
@@ -242,7 +242,7 @@ python3 scripts/interpretation/run_shap_logo.py \
 
 ## Output Summary
 
-* **Synthetic Sequences**  `data/train/POS/[ACC|DON]/ADASYN_SYN`
+* **Synthetic Sequences**  `data/train/POS/[ACC|DON]/ADASYN/ADASYN_`
 * **Trained Models**  `model_files/`
 * **Visualizations**  `output/`
 
