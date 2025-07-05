@@ -127,6 +127,7 @@ python3 run.py --three-class \
   --output_dir ./output \
   --show_progress
 ```
+To evaluate a pretrained model directly, download the model_files archive from Zenodo from the link.
 
 ---
 
