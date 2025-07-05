@@ -110,10 +110,10 @@ cd /workspace/SpliceRead
 
 
 
-**Default Command**:
+**Command**:
 
 ```bash
-python3 run.py
+python3 run.py [options]
 ```
 
 **With Negative Sequences**:
