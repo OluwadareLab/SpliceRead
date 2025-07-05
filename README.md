@@ -158,6 +158,21 @@ To visualize GC/AT nucleotide content, first we have to generate synthetic seque
 
 **Purpose**: Generates synthetic non-canonical sequences using ADASYN in one-hot encoding space.
 
+**Arguments**
+
+| Flag                          | Description                                                                 |
+|-------------------------------|-----------------------------------------------------------------------------|
+| `--ratio <float>`             | % ratio of non-canonical to canonical sequences (e.g., `100` for equal)     |
+| `--acc_can <path>`            | Path to canonical acceptor sequences                                        |
+| `--acc_nc <path>`             | Path to non-canonical acceptor sequences                                    |
+| `--don_can <path>`            | Path to canonical donor sequences                                           |
+| `--don_nc <path>`             | Path to non-canonical donor sequences                                       |
+| `--out_acc <path>`            | Output folder to save synthetic acceptor sequences                          |
+| `--out_don <path>`            | Output folder to save synthetic donor sequences                             |
+| `--use-smote`                 | Use SMOTE instead of ADASYN for synthetic sequence generation (optional)    |
+
+
+
 **Input**:
 
 * `data/train/POS/ACC/NC`
