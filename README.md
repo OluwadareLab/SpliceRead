@@ -95,16 +95,16 @@ cd /workspace/SpliceRead
 
 | Flag                              | Description                                                      |
 |-----------------------------------|------------------------------------------------------------------|
-| `--three_class_no_synthetic`      | Use 3-class system **without** synthetic data                    |
-| `--three_class`                   | Use 3-class system **with** synthetic data (default)             |
+| `--three_class_no_synthetic`      | Use to train the model **without** synthetic data                |
+| `--three_class`                   | Use to train the **with** synthetic data (default)               |
 | `--synthetic_ratio <float>`       | % ratio of non-canonical to canonical sequences (default: 100.0) |
 | `--use_smote`                     | Generate synthetic data with **SMOTE** (instead of ADASYN)       |
 | `--show_progress`                 | Display progress bars during data loading                        |
 | `--sequence_length <400|600>`     | Sequence length in bp (default: 600)                             |
-| `--train_dir <path>`              | Directory for training data (auto-detected if omitted)           |
-| `--test_dir <path>`               | Directory for test data (auto-detected if omitted)               |
-| `--model_dir <path>`              | Where trained models are saved (auto-generated if omitted)       |
-| `--output_dir <path>`             | Where evaluation outputs & logs go (auto-generated if omitted)   |
+| `--train_dir <path>`              | Directory for training data                                      |
+| `--test_dir <path>`               | Directory for test data                                          |
+| `--model_dir <path>`              | Where trained models are saved                                   |
+| `--output_dir <path>`             | Where evaluation outputs & logs go                               |
 | `--model_path <path>`             | Path to a pre-trained model for evaluation                       |
 | `--folds <int>`                   | Number of cross-validation folds (default: 5)                    |
 
