@@ -212,14 +212,15 @@ python3 scripts/data_augmentation/run_generator.py \
 * `Acceptor_Sequences_Canonical_vs_Non_Canonical.png`
 * `Acceptor_Sequences_Canonical_vs_Combined_Non_Canonical.png`
 
-**Command**:
+**Example**:
 
 ```bash
 python3 scripts/visualization/run_visualization.py \
-  --canonical data/train/POS/ACC/CAN \
-  --noncanonical data/train/POS/ACC/NC \
-  --synthetic data/train/POS/ACC/ADASYN_SYN \
-  --title "Acceptor Sequences"
+  --canonical ./to_zenodo/data_600bp/train/POS/ACC/CAN \
+  --noncanonical ./to_zenodo/data_600bp/train/POS/ACC/NC \
+  --synthetic ./to_zenodo/data_600bp/train/POS/ACC/ADASYN/ADASYN_100 \
+  --title "Acceptor Sequences" \
+  --output ./plots
 ```
 
 ---
