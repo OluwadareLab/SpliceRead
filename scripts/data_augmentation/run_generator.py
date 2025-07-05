@@ -1,4 +1,5 @@
 import argparse
+import math
 from generator import (
     load_sequences_from_folder,
     sequence_to_onehot,
@@ -11,43 +12,63 @@ from generator import (
 def parse_args():
     parser = argparse.ArgumentParser(description="Generate synthetic splice site sequences using ADASYN or SMOTE.")
     parser.add_argument('--use-smote', action='store_true', help='Use SMOTE instead of ADASYN')
+    parser.add_argument('--ratio', type=float, required=True, help='Desired ratio (%) of non-canonical to canonical (e.g., 100 for equal, 10 for 10%%)')
+    parser.add_argument('--acc_can', required=True, help='Acceptor canonical folder')
+    parser.add_argument('--acc_nc', required=True, help='Acceptor non-canonical folder')
+    parser.add_argument('--don_can', required=True, help='Donor canonical folder')
+    parser.add_argument('--don_nc', required=True, help='Donor non-canonical folder')
+    parser.add_argument('--out_acc', required=True, help='Output folder for synthetic acceptor')
+    parser.add_argument('--out_don', required=True, help='Output folder for synthetic donor')
     return parser.parse_args()
 
 def main():
     args = parse_args()
+    ratio = args.ratio
 
-    ACCEPTOR_FOLDER = 'test_input/POS/ACC/NC'
-    DONOR_FOLDER = 'test_input/POS/DON/NC'
-    ACCEPTOR_TARGET_COUNT = 20
-    DONOR_TARGET_COUNT = 20
-    OUTPUT_ACCEPTOR_FOLDER = 'test_output/POS/ACC/ADASYN_TEST'
-    OUTPUT_DONOR_FOLDER = 'test_output/POS/DON/ADASYN_TEST'
+    # Load canonical and non-canonical sequences
+    acc_can_seqs = load_sequences_from_folder(args.acc_can)
+    acc_nc_seqs = load_sequences_from_folder(args.acc_nc)
+    don_can_seqs = load_sequences_from_folder(args.don_can)
+    don_nc_seqs = load_sequences_from_folder(args.don_nc)
 
-    acceptor_sequences = load_sequences_from_folder(ACCEPTOR_FOLDER)
-    donor_sequences = load_sequences_from_folder(DONOR_FOLDER)
+    # Compute target counts using the formula
+    acc_can_count = len(acc_can_seqs)
+    acc_nc_count = len(acc_nc_seqs)
+    don_can_count = len(don_can_seqs)
+    don_nc_count = len(don_nc_seqs)
 
-    X_acceptor, encoder_acceptor = sequence_to_onehot(acceptor_sequences)
-    X_donor, encoder_donor = sequence_to_onehot(donor_sequences)
+    acc_target = math.ceil((ratio / 100) * acc_can_count)
+    don_target = math.ceil((ratio / 100) * don_can_count)
 
-    for label, X, encoder, target, out_folder in [
-        ("Acceptor", X_acceptor, encoder_acceptor, ACCEPTOR_TARGET_COUNT, OUTPUT_ACCEPTOR_FOLDER),
-        ("Donor", X_donor, encoder_donor, DONOR_TARGET_COUNT, OUTPUT_DONOR_FOLDER)
+    print(f"[INFO] Acceptor: Canonical={acc_can_count}, Non-Canonical={acc_nc_count}, Target={acc_target}")
+    print(f"[INFO] Donor: Canonical={don_can_count}, Non-Canonical={don_nc_count}, Target={don_target}")
+
+    X_acc, enc_acc = sequence_to_onehot(acc_nc_seqs)
+    X_don, enc_don = sequence_to_onehot(don_nc_seqs)
+
+    for label, X, encoder, target, out_folder, real_count in [
+        ("Acceptor", X_acc, enc_acc, acc_target, args.out_acc, acc_nc_count),
+        ("Donor", X_don, enc_don, don_target, args.out_don, don_nc_count)
     ]:
         try:
-            print(f"\n[INFO] Generating synthetic {label} sequences using {'SMOTE' if args.use_smote else 'ADASYN'}...")
+            needed = target - real_count
+            if needed <= 0:
+                print(f"[INFO] {label}: Enough non-canonical samples already present, skipping generation.")
+                continue
+            print(f"\n[INFO] Generating {needed} synthetic {label} sequences using {'SMOTE' if args.use_smote else 'ADASYN'}...")
             if args.use_smote:
                 synthetic = apply_smote(X, target)
             else:
                 synthetic = apply_adasyn(X, target)
 
-            decoded = onehot_to_sequence(synthetic, encoder)
+            decoded = onehot_to_sequence(synthetic[-needed:], encoder)  # Only the synthetic part
             save_sequences_to_folder(out_folder, decoded, prefix=label.lower())
         except Exception as e:
             if not args.use_smote:
                 print(f"[WARNING] ADASYN failed for {label}: {e}. Retrying with SMOTE...")
                 try:
                     synthetic = apply_smote(X, target)
-                    decoded = onehot_to_sequence(synthetic, encoder)
+                    decoded = onehot_to_sequence(synthetic[-needed:], encoder)
                     save_sequences_to_folder(out_folder, decoded, prefix=label.lower())
                 except Exception as se:
                     print(f"[ERROR] SMOTE also failed for {label}: {se}")
