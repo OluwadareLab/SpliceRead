@@ -149,6 +149,10 @@ python3 scripts/evaluation/run_evaluation.py \
 
 ---
 
+### 2.`Visualization`
+**Purpose**: Visualizes GC/AT nucleotide content using scatter plots.
+
+
 ### 2. `run_generator.py`
 
 **Purpose**: Generates synthetic non-canonical sequences using ADASYN in one-hot encoding space.
