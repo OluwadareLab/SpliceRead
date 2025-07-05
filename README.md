@@ -139,7 +139,7 @@ To evaluate a pretrained 600 bp model, download the model_files archive from Zen
 
 **Example**
 ```bash
-python3 scripts/evaluate.py \
+python3 scripts/evaluation/run_evaluation.py \
   --model_path ./to_zenodo/model_files/best_model_fold_5.h5 \
   --test_data to_zenodo/data_600bp/test \
   --out_dir ./my_eval_results \
