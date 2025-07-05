@@ -183,10 +183,17 @@ To visualize GC/AT nucleotide content, first we have to generate synthetic seque
 * `data/train/POS/ACC/ADASYN_TEST`
 * `data/train/POS/DON/ADASYN_TEST`
 
-**Command**:
+**Example**:
 
 ```bash
-python3 scripts/data_augmentation/run_generator.py
+python3 scripts/data_augmentation/run_generator.py \
+  --ratio 100 \
+  --acc_can ./to_zenodo/data_400bp/train/POS/ACC/CAN \
+  --acc_nc ./to_zenodo/data_400bp/train/POS/ACC/NC \
+  --don_nc ./to_zenodo/data_400bp/train/POS/DON/CAN \
+  --don_nc ./to_zenodo/data_400bp/train/POS/DON/NC \
+  --out_acc ./to_zenodo/data_400bp/train/POS/ACC/ADASYN/ADASYN_100 \ # make sure that ADASYN, CAN, NC are in same folder or place
+  --out_don ./to_zenodo/data_400bp/train/POS/DON/ADASYN/ADASYN_100 
 ```
 
 ---
