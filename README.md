@@ -88,14 +88,7 @@ cd /workspace/SpliceRead
 
 ### 1. `run.py`
 
-**Purpose**: Trains the SpliceREAD model using 5-fold cross-validation.
-
-**Input**: `data/train/` organized by POS/ACC/CAN, POS/ACC/NC, etc.
-
-**Output**:
-
-* Trained model files in `model_files/`
-* Accuracy and metrics printed to terminal
+**Purpose**: Trains and evaluate the SpliceREAD model using 5-fold cross-validation.
 
 **Options**:
 
