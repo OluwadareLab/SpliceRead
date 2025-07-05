@@ -86,7 +86,7 @@ cd /workspace/SpliceRead
 
 ## Execution Instructions
 
-### 1. To train and to evaluate.
+### 1.Train & Evaluate
 
 **Purpose**: Trains and evaluate the SpliceREAD model using 5-fold cross-validation.
 
