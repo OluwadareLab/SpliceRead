@@ -189,6 +189,7 @@ python3 scripts/data_augmentation/run_generator.py \
 #### 2.2. `run_visualization.py`
 
 **Purpose**: Visualizes GC/AT nucleotide content using scatter plots.
+
 **Arguments**:
 
 | Flag                          | Description                                                           |
@@ -199,18 +200,6 @@ python3 scripts/data_augmentation/run_generator.py \
 | `--title <str>`               | Title prefix for each plot (used in figure titles and filenames)      |
 | `--output <path>`             | Directory to save generated plots                                     |
 
-
-
-**Input**:
-
-* Canonical: `data/train/POS/ACC/CAN`
-* Non-Canonical: `data/train/POS/ACC/NC`
-* Synthetic: `data/train/POS/ACC/ADASYN_SYN`
-
-**Output**:
-
-* `Acceptor_Sequences_Canonical_vs_Non_Canonical.png`
-* `Acceptor_Sequences_Canonical_vs_Combined_Non_Canonical.png`
 
 **Example**:
 
