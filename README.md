@@ -137,8 +137,13 @@ To evaluate a pretrained 600 bp model, download the model_files archive from Zen
 | `--sequence_length <600>`     | Sequence length in base pairs (default: `600`)                       |
 | `--show_progress`             | Show progress bars while loading test data    
 
-**Command**
-```
+**Example**
+```bash
+python3 scripts/evaluate.py \
+  --model_path ./to_zenodo/model_files/best_model_fold_5.h5 \
+  --test_data to_zenodo/data_600bp/test \
+  --out_dir ./my_eval_results \
+  --show_progress
 ```
 
 ---
