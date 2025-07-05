@@ -91,7 +91,6 @@ cd /workspace/SpliceRead
 **Purpose**: Trains and evaluate the SpliceREAD model using 5-fold cross-validation.
 
 **Options**:
-## Options
 
 | Flag                              | Description                                                      |
 |-----------------------------------|------------------------------------------------------------------|
