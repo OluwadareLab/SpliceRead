@@ -115,10 +115,17 @@ cd /workspace/SpliceRead
 python3 run.py [options]
 ```
 
-**With Negative Sequences**:
+**Example**:
 
 ```bash
-python3 run.py --include_neg
+python3 run.py --three-class \
+  --synthetic_ratio 100 \
+  --sequence_length 600 \
+  --train_dir ./to_zenodo/data_600bp/train \
+  --test_dir ./to_zenodo/data_600bp/test \
+  --model_dir ./trained_model \
+  --output_dir ./output \
+  --show_progress
 ```
 
 ---
