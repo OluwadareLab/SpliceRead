@@ -100,7 +100,7 @@ cd /workspace/SpliceRead
 | `--synthetic_ratio <float>`       | % ratio of non-canonical to canonical sequences (default: 100.0) |
 | `--use_smote`                     | Generate synthetic data with **SMOTE** (instead of ADASYN)       |
 | `--show_progress`                 | Display progress bars during data loading                        |
-| `--sequence_length <400|600>`     | Sequence length in bp (default: 600)                             |
+| `--sequence_length <400\|600>`    | Sequence length in bp (default: 600)                             |
 | `--train_dir <path>`              | Directory for training data                                      |
 | `--test_dir <path>`               | Directory for test data                                          |
 | `--model_dir <path>`              | Where trained models are saved                                   |
