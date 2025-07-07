@@ -127,7 +127,7 @@ python3 run.py --three-class \
   --output_dir ./output \
   --show_progress
 ```
-To evaluate a pretrained 600 bp model, download the model_files archive from Zenodo.
+To evaluate a pretrained 600 bp model, download the model_files archive from Zenodo. Note: We have only provided the pretrained model, which was trained on sequences of length 600.
 
 **Arguments**:
 | Flag                          | Description                                                          |
@@ -152,7 +152,7 @@ python3 scripts/evaluation/run_evaluation.py \
 ### 2.`Visualization`
 **Purpose**: Visualizes GC/AT nucleotide content using scatter plots.
 
-To visualize GC/AT nucleotide content, first we have to generate synthetic sequences using ADASYN. Synthetic data is already provided in zenodo archive you can use that as well.
+To visualize the GC/AT nucleotide content, we first need to generate synthetic sequences using ADASYN. Synthetic data is already provided in the Zenodo archive; you can use that as well.
 
 #### 2.1. `run_generator.py`
 
