@@ -26,8 +26,8 @@ ___________________
 
 ```
 SpliceRead/
-+-- data/                 # Placeholder folder to be replaced with downloaded dataset
-+-- models/               # Placeholder folder to be replaced with pretrained models
++-- data/                 # Placeholder folder to be replaced with the downloaded dataset
++-- models/               # Placeholder folder to be replaced with pre-trained models
 +-- output/               # Stores generated synthetic sequences and visualization outputs
 +-- scripts/              # All training, generation, evaluation, and visualization scripts
 ¦   +-- training/         # Classifier training logic
@@ -86,9 +86,9 @@ cd /workspace/SpliceRead
 
 ## Execution Instructions
 
-### 1.Train & Evaluate
+### 1. Train & Evaluate
 
-**Purpose**: Trains and evaluate the SpliceREAD model using 5-fold cross-validation.
+**Purpose**: Train and evaluate the SpliceREAD model using 5-fold cross-validation.
 
 **Arguments**:
 
@@ -181,7 +181,7 @@ python3 scripts/data_augmentation/run_generator.py \
   --acc_nc ./to_zenodo/data_400bp/train/POS/ACC/NC \
   --don_nc ./to_zenodo/data_400bp/train/POS/DON/CAN \
   --don_nc ./to_zenodo/data_400bp/train/POS/DON/NC \
-  --out_acc ./to_zenodo/data_400bp/train/POS/ACC/ADASYN/ADASYN_100 \ # make sure that ADASYN, CAN, NC are in same folder or place
+  --out_acc ./to_zenodo/data_400bp/train/POS/ACC/ADASYN/ADASYN_100 \ # make sure that ADASYN, CAN, NC are in the same folder or place
   --out_don ./to_zenodo/data_400bp/train/POS/DON/ADASYN/ADASYN_100 
 ```
 
