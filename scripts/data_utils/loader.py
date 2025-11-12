@@ -10,6 +10,7 @@ NUCLEOTIDE_MAP = {
 }
 
 def one_hot_encode(sequence):
+    "
     return np.array([NUCLEOTIDE_MAP.get(nuc, [0, 0, 0, 0]) for nuc in sequence])
 
 def load_sequences_from_folder(folder_path, label, show_progress=False, desc="Loading", sequence_length=600):
@@ -21,12 +22,13 @@ def load_sequences_from_folder(folder_path, label, show_progress=False, desc="Lo
         with open(file_path, 'r') as f:
             for line in f:
                 line = line.strip()
-                if len(line) == sequence_length: 
+                if len(line) == sequence_length:  
                     data.append(one_hot_encode(line))
                     labels.append(label)
     return np.array(data), np.array(labels)
 
 def load_data(base_path, adasyn_subdir, show_progress=False, sequence_length=600):
+    
     pos_path = os.path.join(base_path, 'POS')
     acc_path = os.path.join(pos_path, 'ACC')
     don_path = os.path.join(pos_path, 'DON')
@@ -54,7 +56,6 @@ def load_data(base_path, adasyn_subdir, show_progress=False, sequence_length=600
     return data, labels
 
 def load_data_with_negatives(base_path, adasyn_subdir, show_progress=False, sequence_length=600):
-    
     pos_path = os.path.join(base_path, 'POS')
     neg_path = os.path.join(base_path, 'NEG')
     acc_path = os.path.join(pos_path, 'ACC')
@@ -104,6 +105,7 @@ def load_data_with_negatives(base_path, adasyn_subdir, show_progress=False, sequ
             all_data.append(data_arr)
             all_labels.append(label_arr)
     
+    
     for data_arr, label_arr in [(neg_acc_data, neg_acc_labels), (neg_don_data, neg_don_labels)]:
         if len(data_arr) > 0:
             all_data.append(data_arr)
@@ -119,7 +121,7 @@ def load_data_with_negatives(base_path, adasyn_subdir, show_progress=False, sequ
     return data, labels
 
 def load_data_seven_class_with_negatives(base_path, adasyn_subdir, show_progress=False):
-    
+   
     pos_path = os.path.join(base_path, 'POS')
     neg_path = os.path.join(base_path, 'NEG')
     acc_path = os.path.join(pos_path, 'ACC')
@@ -158,7 +160,6 @@ def load_data_seven_class_with_negatives(base_path, adasyn_subdir, show_progress
     all_data = []
     all_labels = []
     
-    # Add all sequences
     for data_arr, label_arr in [(acc_can_data, acc_can_labels), (acc_nc_data, acc_nc_labels), 
                                 (don_can_data, don_can_labels), (don_nc_data, don_nc_labels),
                                 (neg_acc_data, neg_acc_labels), (neg_don_data, neg_don_labels)]:
@@ -166,7 +167,6 @@ def load_data_seven_class_with_negatives(base_path, adasyn_subdir, show_progress
             all_data.append(data_arr)
             all_labels.append(label_arr)
     
-    # Add synthetic sequences if they exist
     for data_arr, label_arr in [(acc_syn_data, acc_syn_labels), (don_syn_data, don_syn_labels)]:
         if len(data_arr) > 0:
             all_data.append(data_arr)
@@ -182,6 +182,7 @@ def load_data_seven_class_with_negatives(base_path, adasyn_subdir, show_progress
     return data, labels
 
 def load_data_three_class(base_path, adasyn_subdir=None, show_progress=False, sequence_length=600):
+    
     pos_path = os.path.join(base_path, 'POS')
     neg_path = os.path.join(base_path, 'NEG')
     acc_path = os.path.join(pos_path, 'ACC')
@@ -228,13 +229,13 @@ def load_data_three_class(base_path, adasyn_subdir=None, show_progress=False, se
         all_data.append(don_can_data)
         all_labels.append(don_can_labels)
     
-    # DON/NC
+    
     don_nc_data, don_nc_labels = load_sequences_from_folder(os.path.join(don_path, 'NC'), 1, show_progress, "Loading DON/NC", sequence_length)
     if len(don_nc_data) > 0:
         all_data.append(don_nc_data)
         all_labels.append(don_nc_labels)
     
-    # DON/ADASYN (if specified)
+    
     if adasyn_subdir:
         adasyn_don_path = os.path.join(don_path, 'ADASYN', adasyn_subdir)
         if os.path.exists(adasyn_don_path):
@@ -255,12 +256,13 @@ def load_data_three_class(base_path, adasyn_subdir=None, show_progress=False, se
         all_data.append(neg_acc_data)
         all_labels.append(neg_acc_labels)
     
-    # NEG/DON
+    
     neg_don_data, neg_don_labels = load_sequences_from_folder(os.path.join(neg_path, 'DON'), 2, show_progress, "Loading NEG/DON", sequence_length)
     if len(neg_don_data) > 0:
         all_data.append(neg_don_data)
         all_labels.append(neg_don_labels)
 
+    
     data = np.concatenate(all_data)
     labels = np.concatenate(all_labels)
 
@@ -271,7 +273,7 @@ def load_data_three_class(base_path, adasyn_subdir=None, show_progress=False, se
     return data, labels
 
 def load_test_data_three_class(base_path, show_progress=False, sequence_length=600):
-   
+    
     return load_data_three_class(base_path, adasyn_subdir=None, show_progress=show_progress, sequence_length=sequence_length)
 
 def load_data_from_folder(
@@ -289,7 +291,6 @@ def load_data_from_folder(
             raise ValueError("adasyn_subfolder must be specified when use_six_class_labels=True")
         return load_data(base_path, adasyn_subfolder, show_progress)
     
-    # Original logic for 2-4 class labels
     X, y = [], []
 
     acc_dir = os.path.join(base_path, 'POS', 'ACC')
@@ -301,7 +302,6 @@ def load_data_from_folder(
 
             subtype_upper = subtype.upper()
             
-            # Assign proper labels for ACC data
             if subtype_upper == "CAN":
                 label = 0  # ACC/CAN
                 files = os.listdir(subtype_path)
@@ -335,7 +335,7 @@ def load_data_from_folder(
             elif (include_synthetic and adasyn_subfolder and subtype_upper == "ADASYN"):
                 adasyn_path = os.path.join(subtype_path, adasyn_subfolder)
                 if os.path.isdir(adasyn_path):
-                    label = 1  # ACC/ADASYN goes to ACC/NC after collapse
+                    label = 1  
                     files = os.listdir(adasyn_path)
                     iterator = tqdm(files, desc=f"Loading ACC/ADASYN/{adasyn_subfolder}", disable=not show_progress)
                     for fname in iterator:
@@ -376,7 +376,7 @@ def load_data_from_folder(
                         print(f"[WARN] Skipping {fpath}: {e}")
                         
             elif subtype_upper == "NC":
-                label = 4  # DON/NC
+                label = 4  
                 files = os.listdir(subtype_path)
                 iterator = tqdm(files, desc=f"Loading DON/NC", disable=not show_progress)
                 for fname in iterator:
@@ -390,11 +390,10 @@ def load_data_from_folder(
                     except Exception as e:
                         print(f"[WARN] Skipping {fpath}: {e}")
 
-            # Include only the specified ADASYN subfolder if requested
             elif (include_synthetic and adasyn_subfolder and subtype_upper == "ADASYN"):
                 adasyn_path = os.path.join(subtype_path, adasyn_subfolder)
                 if os.path.isdir(adasyn_path):
-                    label = 4  # DON/ADASYN goes to DON/NC after collapse
+                    label = 4  
                     files = os.listdir(adasyn_path)
                     iterator = tqdm(files, desc=f"Loading DON/ADASYN/{adasyn_subfolder}", disable=not show_progress)
                     for fname in iterator:
@@ -410,7 +409,6 @@ def load_data_from_folder(
                 else:
                     print(f"[WARN] ADASYN subfolder not found: {adasyn_path}")
 
-    # NEGATIVE: ACC (2), DON (5) if requested  
     if include_neg:
         for class_name, label in [('ACC', 2), ('DON', 5)]:
             neg_path = os.path.join(base_path, 'NEG', class_name)
@@ -434,6 +432,7 @@ def load_data_from_folder(
     return np.array(X), np.array(y)
 
 def load_base_data_three_class(base_path, show_progress=False, sequence_length=600):
+   
     pos_path = os.path.join(base_path, 'POS')
     neg_path = os.path.join(base_path, 'NEG')
     acc_path = os.path.join(pos_path, 'ACC')
@@ -442,52 +441,42 @@ def load_base_data_three_class(base_path, show_progress=False, sequence_length=6
     all_data = []
     all_labels = []
 
-    # ==========  ACCEPTOR (Label 0) ==========
     print("[INFO] Loading base Acceptor sequences (ACC/CAN + ACC/NC only)...")
     
-    # ACC/CAN
     acc_can_data, acc_can_labels = load_sequences_from_folder(os.path.join(acc_path, 'CAN'), 0, show_progress, "Loading ACC/CAN", sequence_length)
     if len(acc_can_data) > 0:
         all_data.append(acc_can_data)
         all_labels.append(acc_can_labels)
-    
-    # ACC/NC
+
     acc_nc_data, acc_nc_labels = load_sequences_from_folder(os.path.join(acc_path, 'NC'), 0, show_progress, "Loading ACC/NC", sequence_length)
     if len(acc_nc_data) > 0:
         all_data.append(acc_nc_data)
         all_labels.append(acc_nc_labels)
 
-    # ==========  DONOR (Label 1) ==========
     print("[INFO] Loading base Donor sequences (DON/CAN + DON/NC only)...")
     
-    # DON/CAN
     don_can_data, don_can_labels = load_sequences_from_folder(os.path.join(don_path, 'CAN'), 1, show_progress, "Loading DON/CAN", sequence_length)
     if len(don_can_data) > 0:
         all_data.append(don_can_data)
         all_labels.append(don_can_labels)
     
-    # DON/NC
     don_nc_data, don_nc_labels = load_sequences_from_folder(os.path.join(don_path, 'NC'), 1, show_progress, "Loading DON/NC", sequence_length)
     if len(don_nc_data) > 0:
         all_data.append(don_nc_data)
         all_labels.append(don_nc_labels)
 
-    # ==========  NO SPLICE SITE (Label 2) ==========
     print("[INFO] Loading No Splice Site sequences (NEG/ACC + NEG/DON)...")
     
-    # NEG/ACC
     neg_acc_data, neg_acc_labels = load_sequences_from_folder(os.path.join(neg_path, 'ACC'), 2, show_progress, "Loading NEG/ACC", sequence_length)
     if len(neg_acc_data) > 0:
         all_data.append(neg_acc_data)
         all_labels.append(neg_acc_labels)
     
-    # NEG/DON
     neg_don_data, neg_don_labels = load_sequences_from_folder(os.path.join(neg_path, 'DON'), 2, show_progress, "Loading NEG/DON", sequence_length)
     if len(neg_don_data) > 0:
         all_data.append(neg_don_data)
         all_labels.append(neg_don_labels)
 
-    # Combine all data and labels
     data = np.concatenate(all_data)
     labels = np.concatenate(all_labels)
 
@@ -497,6 +486,7 @@ def load_base_data_three_class(base_path, show_progress=False, sequence_length=6
     return data, labels
 
 def load_base_data_three_class_separated(train_dir, show_progress=False, sequence_length=600):
+   
     print("[INFO] Loading base 3-class data with canonical/non-canonical separation...")
     
     acc_can_path = os.path.join(train_dir, "POS", "ACC", "CAN")
@@ -561,6 +551,7 @@ def load_base_data_three_class_separated(train_dir, show_progress=False, sequenc
     )
 
 def load_synthetic_data_three_class(base_path, adasyn_subdir, show_progress=False):
+   
     pos_path = os.path.join(base_path, 'POS')
     acc_path = os.path.join(pos_path, 'ACC')
     don_path = os.path.join(pos_path, 'DON')
@@ -570,7 +561,7 @@ def load_synthetic_data_three_class(base_path, adasyn_subdir, show_progress=Fals
 
     print(f"[INFO] Loading synthetic data from {adasyn_subdir}...")
 
-    # ACC/ADASYN
+
     adasyn_acc_path = os.path.join(acc_path, 'ADASYN', adasyn_subdir)
     if os.path.exists(adasyn_acc_path):
         print(f"[INFO] Loading ACC/ADASYN/{adasyn_subdir} (as Acceptor)...")
@@ -581,7 +572,7 @@ def load_synthetic_data_three_class(base_path, adasyn_subdir, show_progress=Fals
     else:
         print(f"[WARN] ADASYN folder not found: {adasyn_acc_path}")
 
-    # DON/ADASYN
+    
     adasyn_don_path = os.path.join(don_path, 'ADASYN', adasyn_subdir)
     if os.path.exists(adasyn_don_path):
         print(f"[INFO] Loading DON/ADASYN/{adasyn_subdir} (as Donor)...")
@@ -596,6 +587,7 @@ def load_synthetic_data_three_class(base_path, adasyn_subdir, show_progress=Fals
         print("[WARN] No synthetic data found!")
         return np.array([]).reshape(0, 600, 4), np.array([])
 
+    
     data = np.concatenate(all_data)
     labels = np.concatenate(all_labels)
 
