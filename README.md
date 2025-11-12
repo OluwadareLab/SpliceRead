@@ -116,7 +116,7 @@ python3 run.py [options]
 ```
 
 **Example**: 
-We have  provided two modes, one for cross-validation "cv" and another is "final" training mode.
+We provide two training modes: “cv” for cross-validation and “final” for final model training. In the final mode, the model automatically generates test results once training is complete.
 
 ```bash
 python3 run.py --three_class \
@@ -129,7 +129,7 @@ python3 run.py --three_class \
   --output_dir ./output \
   --show_progress
 ```
-To evaluate a pretrained 600 bp model, download the model_files archive from Zenodo. Note: We have only provided the pretrained model, which was trained on sequences of length 600.
+To evaluate a pretrained 600 bp or 400bp model, download the model_files archive from Zenodo. Note: We have provided the pretrained model, which was trained on sequences of length 600 and 400.
 
 **Arguments**:
 | Flag                          | Description                                                          |
