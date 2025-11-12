@@ -1,9 +1,32 @@
 import os
+import sys
 import numpy as np
 from sklearn.metrics import classification_report, accuracy_score, f1_score, precision_score, recall_score
 from tensorflow.keras.models import load_model
 from tensorflow.keras import layers
 from tensorflow.keras.layers import Conv1D, BatchNormalization
+
+# Add Benchmark_splicefinder to path for CMR/NCMR metrics
+CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
+# Go up from scripts/evaluation to project root (2 levels up)
+PROJECT_ROOT = os.path.dirname(os.path.dirname(CURRENT_DIR))
+BENCHMARK_DIR = os.path.join(PROJECT_ROOT, "Benchmark_splicefinder", "SpliceFinder")
+if BENCHMARK_DIR not in sys.path:
+    sys.path.insert(0, BENCHMARK_DIR)
+
+try:
+    from cmr_ncmr_metrics import calculate_cmr_ncmr_metrics
+except ImportError:
+    # Fallback: try importing directly from file
+    import importlib.util
+    cmr_metrics_path = os.path.join(PROJECT_ROOT, "Benchmark_splicefinder", "SpliceFinder", "cmr_ncmr_metrics.py")
+    if os.path.exists(cmr_metrics_path):
+        spec = importlib.util.spec_from_file_location("cmr_ncmr_metrics", cmr_metrics_path)
+        cmr_ncmr_metrics = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(cmr_ncmr_metrics)
+        calculate_cmr_ncmr_metrics = cmr_ncmr_metrics.calculate_cmr_ncmr_metrics
+    else:
+        raise ImportError(f"Could not find cmr_ncmr_metrics.py at {cmr_metrics_path}")
 
 # Define the ResidualBlock class
 class ResidualBlock(layers.Layer):
@@ -93,7 +116,7 @@ def load_test_data_three_class(base_path, show_progress=False, sequence_length=6
 
     all_data = []
     all_labels = []
-
+    
     # Load Acceptor sequences (Label 0)
     print("[INFO] Loading Acceptor test sequences...")
     acc_can_data, acc_can_labels = load_sequences_from_folder(
@@ -378,79 +401,18 @@ def evaluate_model_with_canonical_analysis(model_path, test_data, test_labels, c
     
     formatted_report = '\n'.join(formatted_lines)
     
-    # Calculate canonical/non-canonical misclassification rates
-    canonical_analysis = {}
+    # Calculate canonical/non-canonical misclassification rates using the correct CMR/NCMR metrics
+    cmr_ncmr_metrics = calculate_cmr_ncmr_metrics(test_labels, predicted_classes, canonical_info)
     
-    # Acceptor Non-canonical Analysis
-    if canonical_info['acceptor_noncanonical']:
-        acc_nc_indices = np.array(canonical_info['acceptor_noncanonical'])
-        acc_nc_true = test_labels[acc_nc_indices]
-        acc_nc_pred = predicted_classes[acc_nc_indices]
-        acc_nc_total = len(acc_nc_indices)
-        acc_nc_correct = np.sum(acc_nc_true == acc_nc_pred)
-        acc_nc_accuracy = acc_nc_correct / acc_nc_total if acc_nc_total > 0 else 0.0
-        acc_nc_misclassified = np.sum(acc_nc_pred != 0)
-        acc_nc_misclassification_rate = acc_nc_misclassified / acc_nc_total if acc_nc_total > 0 else 0.0
-        canonical_analysis['acceptor_noncanonical'] = {
-            'total': acc_nc_total,
-            'correct': acc_nc_correct,
-            'accuracy': acc_nc_accuracy,
-            'misclassification_rate': acc_nc_misclassification_rate,
-            'misclassified': int(acc_nc_misclassified)
-        }
-
-    # Acceptor Canonical Analysis
-    if canonical_info['acceptor_canonical']:
-        acc_can_indices = np.array(canonical_info['acceptor_canonical'])
-        acc_can_true = test_labels[acc_can_indices]
-        acc_can_pred = predicted_classes[acc_can_indices]
-        acc_can_total = len(acc_can_indices)
-        acc_can_correct = np.sum(acc_can_true == acc_can_pred)
-        acc_can_accuracy = acc_can_correct / acc_can_total if acc_can_total > 0 else 0.0
-        acc_can_misclassified = np.sum(acc_can_pred != 0)
-        acc_can_misclassification_rate = acc_can_misclassified / acc_can_total if acc_can_total > 0 else 0.0
-        canonical_analysis['acceptor_canonical'] = {
-            'total': acc_can_total,
-            'correct': acc_can_correct,
-            'accuracy': acc_can_accuracy,
-            'misclassification_rate': acc_can_misclassification_rate,
-            'misclassified': int(acc_can_misclassified)
-        }
-
-    # Donor Non-canonical Analysis
-    if canonical_info['donor_noncanonical']:
-        don_nc_indices = np.array(canonical_info['donor_noncanonical'])
-        don_nc_true = test_labels[don_nc_indices]
-        don_nc_pred = predicted_classes[don_nc_indices]
-        don_nc_total = len(don_nc_indices)
-        don_nc_correct = np.sum(don_nc_true == don_nc_pred)
-        don_nc_accuracy = don_nc_correct / don_nc_total if don_nc_total > 0 else 0.0
-        don_nc_misclassified = np.sum(don_nc_pred != 1)
-        don_nc_misclassification_rate = don_nc_misclassified / don_nc_total if don_nc_total > 0 else 0.0
-        canonical_analysis['donor_noncanonical'] = {
-            'total': don_nc_total,
-            'correct': don_nc_correct,
-            'accuracy': don_nc_accuracy,
-            'misclassification_rate': don_nc_misclassification_rate,
-            'misclassified': int(don_nc_misclassified)
-        }
-
-    # Donor Canonical Analysis
-    if canonical_info['donor_canonical']:
-        don_can_indices = np.array(canonical_info['donor_canonical'])
-        don_can_true = test_labels[don_can_indices]
-        don_can_pred = predicted_classes[don_can_indices]
-        don_can_total = len(don_can_indices)
-        don_can_correct = np.sum(don_can_true == don_can_pred)
-        don_can_accuracy = don_can_correct / don_can_total if don_can_total > 0 else 0.0
-        don_can_misclassified = np.sum(don_can_pred != 1)
-        don_can_misclassification_rate = don_can_misclassified / don_can_total if don_can_total > 0 else 0.0
-        canonical_analysis['donor_canonical'] = {
-            'total': don_can_total,
-            'correct': don_can_correct,
-            'accuracy': don_can_accuracy,
-            'misclassification_rate': don_can_misclassification_rate,
-            'misclassified': int(don_can_misclassified)
+    # Convert to the expected format for backward compatibility
+    canonical_analysis = {}
+    for key, metrics in cmr_ncmr_metrics.items():
+        canonical_analysis[key] = {
+            'total': metrics['total'],
+            'correct': metrics['correct'],
+            'accuracy': metrics['accuracy'],
+            'misclassification_rate': metrics.get('cmr', metrics.get('ncmr', 0.0)),
+            'misclassified': metrics['misclassified']
         }
     
     return accuracy, f1, precision, recall, formatted_report, canonical_analysis

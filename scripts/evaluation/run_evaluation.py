@@ -2,6 +2,7 @@ import argparse
 import sys
 import os
 
+# Add the parent directory to the path to import from scripts/
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from evaluation.model_evaluator import evaluate_model_three_class, load_test_data_three_class
@@ -21,6 +22,7 @@ def main():
     
     args = parser.parse_args()
 
+    # Create output directory
     os.makedirs(args.out_dir, exist_ok=True)
 
     print(f"[INFO] Evaluating model: {args.model_path}")
@@ -29,6 +31,7 @@ def main():
     print(f"[INFO] Output directory: {args.out_dir}")
     print("-" * 60)
 
+    # Load test data
     print("[INFO] Loading test data with 3-class system...")
     X_test, y_test = load_test_data_three_class(
         args.test_data, 
@@ -40,15 +43,16 @@ def main():
         print("[ERROR] No test data loaded! Check the test data directory path.")
         sys.exit(1)
     
+    # Evaluate model
     print("[INFO] Evaluating model with 3-class system...")
     accuracy, f1, precision, recall, report = evaluate_model_three_class(args.model_path, X_test, y_test)
-    
-    # Save results
+        
+        # Save results
     import datetime
     timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
     output_file = os.path.join(args.out_dir, f'evaluation_results_{args.sequence_length}bp_{timestamp}.txt')
     
-    with open(output_file, 'w') as f:
+        with open(output_file, 'w') as f:
         f.write("SpliceRead 3-Class Evaluation Results\n")
         f.write("=" * 40 + "\n\n")
         f.write(f"Timestamp: {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
@@ -67,10 +71,10 @@ def main():
         f.write("-" * 10 + "\n")
         f.write(f"Accuracy:  {accuracy:.4f}\n")
         f.write(f"F1 Score:  {f1:.4f}\n")
-        f.write(f"Precision: {precision:.4f}\n")
+            f.write(f"Precision: {precision:.4f}\n")
         f.write(f"Recall:    {recall:.4f}\n\n")
         
-        f.write("Classification Report:\n")
+            f.write("Classification Report:\n")
         f.write("-" * 20 + "\n")
         f.write(report)
 
