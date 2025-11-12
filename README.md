@@ -236,7 +236,7 @@ Example:
 ```bash
 python3 scripts/interpretation/run_shap_cwm_pwm.py \
   --model models/SpliceRead_model.h5 \
-  --data data/train/POS/ACC \
+  --data data/test/POS/ACC \
   --samples 256 \ 
   --class_index 0 \
   --seq_len 400 \
