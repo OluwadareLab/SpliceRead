@@ -6,9 +6,9 @@ A deep learning framework for canonical and non-canonical splice site classifica
 
 **Authors:**
 
+* Sahil Thapa
 * Khushali Samderiya
 * Rohit Menon
-* Sahil Thapa
 * Prof. Oluwatosin Oluwadare
 
 ___________________
@@ -115,14 +115,16 @@ cd /workspace/SpliceRead
 python3 run.py [options]
 ```
 
-**Example**:
+**Example**: 
+We have  provided two modes, one for cross-validation "cv" and another is "final" training mode.
 
 ```bash
-python3 run.py --three-class \
-  --synthetic_ratio 100 \
-  --sequence_length 600 \
-  --train_dir ./to_zenodo/data_600bp/train \
-  --test_dir ./to_zenodo/data_600bp/test \
+python3 run.py --three_class \
+  --mode final \
+  --synthetic_ratio 5 \
+  --sequence_length 400 \
+  --train_dir ./to_zenodo/data_400bp/train \
+  --test_dir ./to_zenodo/data_400bp/test \
   --model_dir ./trained_model \
   --output_dir ./output \
   --show_progress
