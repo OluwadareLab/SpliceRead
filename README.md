@@ -142,10 +142,11 @@ To evaluate a pretrained 600 bp or 400bp model, download the model_files archive
 
 **Example**
 ```bash
-python3 scripts/evaluation/run_evaluation.py \
-  --model_path ./to_zenodo/model_files/best_model_fold_5.h5 \
-  --test_data to_zenodo/data_600bp/test \
-  --out_dir ./my_eval_results \
+python3 test.py \
+  --model_path <path_to_model> \
+  --test_dir <path_to_test_data> \
+  --output_dir <path_to_output_directory> \
+  --sequence_length <400 or 600> \
   --show_progress
 ```
 
