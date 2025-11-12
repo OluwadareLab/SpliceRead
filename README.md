@@ -1,6 +1,5 @@
-# SpliceREAD
-
-A deep learning framework for canonical and non-canonical splice site classification with synthetic data augmentation and SHAP-based interpretability.
+# SpliceREAD  
+A deep learning framework for accurate classification of canonical and non-canonical splice sites using residual blocks and synthetic data augmentation.
 
 [See SpliceRead Wiki for Full Documentation on Installation and Usage](https://github.com/OluwadareLab/SpliceRead/wiki)
 
