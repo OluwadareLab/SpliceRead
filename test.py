@@ -25,10 +25,6 @@ if SCRIPTS_DIR not in sys.path:
     sys.path.insert(0, SCRIPTS_DIR)
 
 
-BENCHMARK_DIR = os.path.join(CURRENT_DIR, "Benchmark_splicefinder", "SpliceFinder")
-if BENCHMARK_DIR not in sys.path:
-    sys.path.insert(0, BENCHMARK_DIR)
-
 from data_utils.loader import load_test_data_three_class
 from evaluation.model_evaluator import evaluate_model_three_class, ResidualBlock, load_test_data_with_canonical_info, evaluate_model_with_canonical_analysis
 from cmr_ncmr_metrics import calculate_cmr_ncmr_metrics, save_cmr_ncmr_results
