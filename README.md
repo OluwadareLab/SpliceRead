@@ -231,14 +231,24 @@ python3 scripts/visualization/run_visualization.py \
 * SHAP logo plot: `output/acceptor_shap_logo.png`
 
 **Command**:
+To generate PWM Information Logo and Signed SHAP Contribution Logo:
+Example: 
+```bash
+
+
+```
+
 
 ```bash
-python3 scripts/interpretation/run_shap_logo.py \
+python3 scripts/interpretation/run_shap_cwm_pwm.py \
   --model models/SpliceRead_model.h5 \
   --data data/train/POS/ACC \
-  --samples 100 \
-  --class_index 1 \
-  --output output/acceptor_shap_logo.png
+  --samples 256 \
+  --class_index 0 \
+  --seq_len 400 \
+  --start 190 \
+  --end 210 \
+  --pwm_info_png output/pwm_info_logo.png
 ```
 
 ---
