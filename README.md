@@ -233,21 +233,17 @@ python3 scripts/visualization/run_visualization.py \
 **Command**:
 To generate PWM Information Logo and Signed SHAP Contribution Logo:
 Example: 
-```bash
-
-
-```
-
 
 ```bash
 python3 scripts/interpretation/run_shap_cwm_pwm.py \
   --model models/SpliceRead_model.h5 \
   --data data/train/POS/ACC \
-  --samples 256 \
+  --samples 256 \ 
   --class_index 0 \
   --seq_len 400 \
   --start 190 \
   --end 210 \
+  --cwm_png output/shap_signed_logo.png \
   --pwm_info_png output/pwm_info_logo.png
 ```
 
