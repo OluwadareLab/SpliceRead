@@ -483,7 +483,7 @@ def main():
             epochs=args.epochs
         )
 
-    # ========== TEST EVALUATION (OPTIONAL FOR CV MODE) ==========
+    # ========== TEST EVALUATION (CV MODE) ==========
     if args.evaluate_test:
         
         print(f"\n[WARNING] Test evaluation enabled. This should only be used for final reporting!")
