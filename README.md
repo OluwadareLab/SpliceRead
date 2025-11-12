@@ -11,7 +11,7 @@ A deep learning framework for accurate classification of canonical and non-canon
 * Prof. Oluwatosin Oluwadare
 
 ___________________
-#### OluwadareLab, University of Colorado, Colorado Springs
+#### OluwadareLab, University of North Texas, Denton
 ___________________
 
 
@@ -269,7 +269,7 @@ If you use SpliceREAD in your research, please cite our repository:
 
 ## Contact
 
-For questions, please contact [Khushali Samderiya](mailto:ksamderi@uccs.edu) or [Prof. Oluwatosin Oluwadare](mailto:ooluwada@uccs.edu)
+For questions, please contact [Sahil Thapa](mailto:sahilthapa@my.unt.edu) or [Prof. Oluwatosin Oluwadare](mailto:Oluwatosin.Oluwadare@unt.edu)
 
 ---
 
