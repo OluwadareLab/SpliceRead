@@ -6,9 +6,9 @@ from tensorflow.keras.models import load_model
 from tensorflow.keras import layers
 from tensorflow.keras.layers import Conv1D, BatchNormalization
 
-# Add Benchmark_splicefinder to path for CMR/NCMR metrics
+
 CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
-# Go up from scripts/evaluation to project root (2 levels up)
+
 PROJECT_ROOT = os.path.dirname(os.path.dirname(CURRENT_DIR))
 BENCHMARK_DIR = os.path.join(PROJECT_ROOT, "Benchmark_splicefinder", "SpliceFinder")
 if BENCHMARK_DIR not in sys.path:
@@ -17,7 +17,7 @@ if BENCHMARK_DIR not in sys.path:
 try:
     from cmr_ncmr_metrics import calculate_cmr_ncmr_metrics
 except ImportError:
-    # Fallback: try importing directly from file
+    
     import importlib.util
     cmr_metrics_path = os.path.join(PROJECT_ROOT, "Benchmark_splicefinder", "SpliceFinder", "cmr_ncmr_metrics.py")
     if os.path.exists(cmr_metrics_path):
@@ -28,7 +28,7 @@ except ImportError:
     else:
         raise ImportError(f"Could not find cmr_ncmr_metrics.py at {cmr_metrics_path}")
 
-# Define the ResidualBlock class
+
 class ResidualBlock(layers.Layer):
     def __init__(self, filters, kernel_size, strides=1, use_activation=True, **kwargs):
         super().__init__(**kwargs)
@@ -60,11 +60,11 @@ class ResidualBlock(layers.Layer):
         })
         return config
 
-# Nucleotide mapping for one-hot encoding
+
 NUCLEOTIDE_MAP = {'A': [1, 0, 0, 0], 'C': [0, 1, 0, 0], 'G': [0, 0, 1, 0], 'T': [0, 0, 0, 1]}
 
 def one_hot_encode(sequence):
-    """Convert DNA sequence to one-hot encoding."""
+    
     return np.array([NUCLEOTIDE_MAP[nt] for nt in sequence])
 
 def load_sequences_from_folder(folder_path, label, sequence_length=600):
@@ -117,7 +117,7 @@ def load_test_data_three_class(base_path, show_progress=False, sequence_length=6
     all_data = []
     all_labels = []
     
-    # Load Acceptor sequences (Label 0)
+   
     print("[INFO] Loading Acceptor test sequences...")
     acc_can_data, acc_can_labels = load_sequences_from_folder(
         os.path.join(acc_path, 'CAN'), 0, sequence_length
@@ -133,7 +133,7 @@ def load_test_data_three_class(base_path, show_progress=False, sequence_length=6
         all_data.append(acc_nc_data)
         all_labels.append(acc_nc_labels)
 
-    # Load Donor sequences (Label 1)
+    
     print("[INFO] Loading Donor test sequences...")
     don_can_data, don_can_labels = load_sequences_from_folder(
         os.path.join(don_path, 'CAN'), 1, sequence_length
@@ -149,7 +149,7 @@ def load_test_data_three_class(base_path, show_progress=False, sequence_length=6
         all_data.append(don_nc_data)
         all_labels.append(don_nc_labels)
 
-    # Load Negative sequences (Label 2)
+    
     print("[INFO] Loading Negative test sequences...")
     neg_acc_data, neg_acc_labels = load_sequences_from_folder(
         os.path.join(neg_path, 'ACC'), 2, sequence_length
@@ -165,7 +165,7 @@ def load_test_data_three_class(base_path, show_progress=False, sequence_length=6
         all_data.append(neg_don_data)
         all_labels.append(neg_don_labels)
 
-    # Combine all data
+    
     if all_data:
         data = np.concatenate(all_data)
         labels = np.concatenate(all_labels)
@@ -209,7 +209,7 @@ def load_test_data_with_canonical_info(base_path, show_progress=False, sequence_
     
     current_index = 0
 
-    # Load Acceptor sequences (Label 0)
+
     print("[INFO] Loading Acceptor test sequences...")
     acc_can_data, acc_can_labels = load_sequences_from_folder(
         os.path.join(acc_path, 'CAN'), 0, sequence_length
@@ -229,7 +229,7 @@ def load_test_data_with_canonical_info(base_path, show_progress=False, sequence_
         canonical_info['acceptor_noncanonical'] = list(range(current_index, current_index + len(acc_nc_data)))
         current_index += len(acc_nc_data)
 
-    # Load Donor sequences (Label 1)
+   
     print("[INFO] Loading Donor test sequences...")
     don_can_data, don_can_labels = load_sequences_from_folder(
         os.path.join(don_path, 'CAN'), 1, sequence_length
@@ -249,7 +249,7 @@ def load_test_data_with_canonical_info(base_path, show_progress=False, sequence_
         canonical_info['donor_noncanonical'] = list(range(current_index, current_index + len(don_nc_data)))
         current_index += len(don_nc_data)
 
-    # Load Negative sequences (Label 2)
+
     print("[INFO] Loading Negative test sequences...")
     neg_acc_data, neg_acc_labels = load_sequences_from_folder(
         os.path.join(neg_path, 'ACC'), 2, sequence_length
@@ -265,7 +265,7 @@ def load_test_data_with_canonical_info(base_path, show_progress=False, sequence_
         all_data.append(neg_don_data)
         all_labels.append(neg_don_labels)
 
-    # Combine all data
+    
     if all_data:
         data = np.concatenate(all_data)
         labels = np.concatenate(all_labels)
@@ -277,7 +277,6 @@ def load_test_data_with_canonical_info(base_path, show_progress=False, sequence_
     print(f"[INFO] Test class distribution: {np.bincount(labels)}")
     print("[INFO] Test class mapping: 0=Acceptor, 1=Donor, 2=No Splice Site")
     
-    # Print canonical info summary
     print(f"[INFO] Acceptor Canonical: {len(canonical_info['acceptor_canonical'])} sequences")
     print(f"[INFO] Acceptor Non-canonical: {len(canonical_info['acceptor_noncanonical'])} sequences")
     print(f"[INFO] Donor Canonical: {len(canonical_info['donor_canonical'])} sequences")
@@ -298,42 +297,40 @@ def evaluate_model_three_class(model_path, test_data, test_labels):
     Returns:
         tuple: (accuracy, f1_score, precision, recall, classification_report)
     """
-    # Load the model
+
     model = load_model(model_path, custom_objects={"ResidualBlock": ResidualBlock})
     
-    # Debug: Check model output shape
     print(f"Model output shape: {model.output_shape}")
     print(f"Model expects {model.output_shape[-1]} classes")
 
-    # Make predictions
     predictions = model.predict(test_data)
     predicted_classes = np.argmax(predictions, axis=1)
     
-    # Debug: Check classes
+ 
     print(f"Unique classes in test_labels: {np.unique(test_labels)}")
     print(f"Unique classes in predicted_classes: {np.unique(predicted_classes)}")
 
-    # Calculate metrics
+   
     accuracy = accuracy_score(test_labels, predicted_classes)
     f1 = f1_score(test_labels, predicted_classes, average='weighted')
     precision = precision_score(test_labels, predicted_classes, average='weighted')
     recall = recall_score(test_labels, predicted_classes, average='weighted')
     
-    # Generate classification report with 4 decimal places
+  
     class_report = classification_report(
         test_labels, predicted_classes,
-        labels=[0, 1, 2],  # 3-class labels
+        labels=[0, 1, 2],  
         target_names=['Acceptor', 'Donor', 'No Splice Site'],
-        zero_division=0,  # Handle missing classes gracefully
-        digits=4  # Show 4 decimal places
+        zero_division=0,  
+        digits=4  
     )
     
-    # Format the accuracy row to show 4 decimal places
+    
     lines = class_report.split('\n')
     formatted_lines = []
     for line in lines:
         if line.strip().startswith('accuracy'):
-            # Format accuracy row with 4 decimal places
+           
             parts = line.split()
             if len(parts) >= 4:
                 accuracy_val = float(parts[3])
@@ -361,34 +358,34 @@ def evaluate_model_with_canonical_analysis(model_path, test_data, test_labels, c
     Returns:
         tuple: (accuracy, f1, precision, recall, classification_report, canonical_analysis)
     """
-    # Load the model
+    
     model = load_model(model_path, custom_objects={"ResidualBlock": ResidualBlock})
     
-    # Make predictions
+    
     predictions = model.predict(test_data)
     predicted_classes = np.argmax(predictions, axis=1)
     
-    # Calculate basic metrics
+    
     accuracy = accuracy_score(test_labels, predicted_classes)
     f1 = f1_score(test_labels, predicted_classes, average='weighted')
     precision = precision_score(test_labels, predicted_classes, average='weighted')
     recall = recall_score(test_labels, predicted_classes, average='weighted')
     
-    # Generate classification report with 4 decimal places
+  
     class_report = classification_report(
         test_labels, predicted_classes,
-        labels=[0, 1, 2],  # 3-class labels
+        labels=[0, 1, 2],  
         target_names=['Acceptor', 'Donor', 'No Splice Site'],
-        zero_division=0,  # Handle missing classes gracefully
-        digits=4  # Show 4 decimal places
+        zero_division=0,  
+        digits=4 
     )
     
-    # Format the accuracy row to show 4 decimal places
+   
     lines = class_report.split('\n')
     formatted_lines = []
     for line in lines:
         if line.strip().startswith('accuracy'):
-            # Format accuracy row with 4 decimal places
+            
             parts = line.split()
             if len(parts) >= 4:
                 accuracy_val = float(parts[3])
@@ -401,10 +398,10 @@ def evaluate_model_with_canonical_analysis(model_path, test_data, test_labels, c
     
     formatted_report = '\n'.join(formatted_lines)
     
-    # Calculate canonical/non-canonical misclassification rates using the correct CMR/NCMR metrics
+  
     cmr_ncmr_metrics = calculate_cmr_ncmr_metrics(test_labels, predicted_classes, canonical_info)
     
-    # Convert to the expected format for backward compatibility
+   
     canonical_analysis = {}
     for key, metrics in cmr_ncmr_metrics.items():
         canonical_analysis[key] = {
