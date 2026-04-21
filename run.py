@@ -7,7 +7,7 @@ from datetime import datetime
 import tensorflow as tf
 
 
-SEED = 42
+SEED = 42 # change the seed to see the variation in result
 random.seed(SEED)
 np.random.seed(SEED)
 tf.random.set_seed(SEED)
